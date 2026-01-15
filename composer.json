@@ -1,0 +1,45 @@
+{
+    "name": "respect/masker",
+    "type": "library",
+    "description": "Mask sensitive text data using flexible range-based patterns",
+    "require": {
+        "symfony/polyfill-mbstring": "^1.33",
+        "php": "^8.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "respect/coding-standard": "^5.0"
+    },
+    "license": "ISC",
+    "autoload": {
+        "psr-4": {
+            "Respect\\Masker\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Respect\\Masker\\Test\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Henrique Moody",
+            "email": "henriquemoody@gmail.com"
+        }
+    ],
+    "scripts": {
+        "lint": "phpcs",
+        "test": "phpunit",
+        "analyze": "phpstan"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

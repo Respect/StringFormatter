@@ -1,0 +1,7 @@
+parameters:
+  fileExtensions:
+    - php
+  level: max
+  paths:
+    - src/
+    - tests/
