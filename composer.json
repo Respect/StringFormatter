@@ -22,7 +22,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Respect\\StringFormatter\\Test\\": "tests/"
+            "Respect\\StringFormatter\\": ["docs/contributing/templates/php/src"],
+            "Respect\\StringFormatter\\Test\\": ["tests/", "docs/contributing/templates/php/tests"]
         }
     },
     "authors": [
