@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Respect\Masker;
-
-use InvalidArgumentException;
+namespace Respect\StringFormatter;
 
 use function array_merge;
 use function array_pad;
@@ -21,23 +19,29 @@ use function preg_match;
 use function preg_split;
 use function range;
 use function sort;
+use function sprintf;
 use function str_contains;
 use function str_starts_with;
 use function substr;
 use function trim;
 
-final readonly class TextMasker
+final readonly class MaskFormatter implements Formatter
 {
-    public function mask(string $input, string $range, string $replacement = '*'): string
-    {
+    public function __construct(
+        private string $range,
+        private string $replacement = '*',
+    ) {
         if (!$this->isValidRange($range)) {
-            throw new InvalidArgumentException('Invalid mask ranges provided');
+            throw new InvalidFormatterException(sprintf('"%s" is not a valid mask range', $range));
         }
+    }
 
+    public function format(string $input): string
+    {
         $characters = mb_str_split($input);
         $inputLength = count($characters);
 
-        foreach ($this->getPositionsToMask($input, $range) as $position) {
+        foreach ($this->getPositionsToMask($input, $this->range) as $position) {
             if ($position < 0) {
                 $actualPos = ($position * -1) - 1;
             } else {
@@ -47,13 +51,13 @@ final readonly class TextMasker
                 }
             }
 
-            $characters[$actualPos] = $replacement;
+            $characters[$actualPos] = $this->replacement;
         }
 
         return implode('', $characters);
     }
 
-    public function isValidRange(string $range): bool
+    private function isValidRange(string $range): bool
     {
         $ranges = preg_split('/(?<!\\\\),/', $range) ?: [];
         foreach ($ranges as $range) {
@@ -66,10 +70,10 @@ final readonly class TextMasker
     }
 
     /** @return int[] */
-    private function getPositionsToMask(string $input, string $maskRanges): array
+    private function getPositionsToMask(string $input, string $range): array
     {
         $positions = [];
-        $ranges = explode(',', $maskRanges);
+        $ranges = explode(',', $range);
 
         foreach ($ranges as $range) {
             $range = trim($range);

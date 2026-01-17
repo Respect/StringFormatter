@@ -2,32 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Respect\Masker\Test\Unit;
+namespace Respect\StringFormatter\Test\Unit;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Respect\Masker\TextMasker;
+use Respect\StringFormatter\InvalidFormatterException;
+use Respect\StringFormatter\MaskFormatter;
 
-#[CoversClass(TextMasker::class)]
-final class TextMaskerTest extends TestCase
+use function sprintf;
+
+#[CoversClass(MaskFormatter::class)]
+final class MaskFormatterTest extends TestCase
 {
-    private TextMasker $masker;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->masker = new TextMasker();
-    }
-
     #[Test]
     #[DataProvider('providerForMaskWithRanges')]
-    public function itShouldMaskWithRanges(string $input, string $maskChar, string $maskRanges, string $expected): void
+    public function itShouldMaskWithRanges(string $range, string $replacement, string $input, string $expected): void
     {
-        $actual = $this->masker->mask($input, $maskRanges, $maskChar);
+        $formatter = new MaskFormatter($range, $replacement);
+        $actual = $formatter->format($input);
 
         self::assertSame($expected, $actual);
     }
@@ -37,358 +31,336 @@ final class TextMaskerTest extends TestCase
     {
         return [
             'numeric ranges' => [
-                '1234123412341234',
-                '*',
                 '1-3,8-12',
+                '*',
+                '1234123412341234',
                 '***4123*****1234',
             ],
             'character delimiter at' => [
-                'username@domain.com',
-                '*',
                 '1-@',
+                '*',
+                'username@domain.com',
                 '********@domain.com',
             ],
             'numeric positions' => [
-                'password123',
-                '*',
                 '1-5',
+                '*',
+                'password123',
                 '*****ord123',
             ],
             'complex character ranges' => [
-                'ABCD1234567890EFGH',
-                '#',
                 'A-D,5-8',
+                '#',
+                'ABCD1234567890EFGH',
                 '###D####567890EFGH',
             ],
             'escaped numeral' => [
-                '1234567890',
-                'X',
                 '3-\5',
+                'X',
+                '1234567890',
                 '12XX567890',
             ],
 
             'invalid positions' => [
-                'short',
-                '*',
                 '10-15',
+                '*',
+                'short',
                 'short',
             ],
             'multiple ranges' => [
-                'abcdefghij',
-                '#',
                 '1-3,6-8,10',
+                '#',
+                'abcdefghij',
                 '###de###i#',
             ],
             'escaped special character' => [
-                'email+tag@domain.com',
-                '*',
                 '1-\+',
+                '*',
+                'email+tag@domain.com',
                 '*****+tag@domain.com',
             ],
             'dash as delimiter - escaped' => [
-                'ABCD-1234567890EFGH',
-                '#',
                 'A-\-',
+                '#',
+                'ABCD-1234567890EFGH',
                 '####-1234567890EFGH',
             ],
             'comma as delimiter - escaped' => [
-                'ABC,DEF,GHI',
-                '*',
                 'B-\,',
+                '*',
+                'ABC,DEF,GHI',
                 '**C,DEF,GHI',
             ],
 
             'empty input' => [
-                '',
-                '*',
                 '1-3',
+                '*',
+                '',
                 '',
             ],
             'beyond string length' => [
-                'abc',
-                '*',
                 '1-10',
+                '*',
+                'abc',
                 '***',
             ],
             'to end from start' => [
-                '12345678',
-                '*',
                 '1-',
+                '*',
+                '12345678',
                 '********',
             ],
             'to end from position 3' => [
-                '12345678',
-                '*',
                 '3-',
+                '*',
+                '12345678',
                 '12******',
             ],
             'to end from position 5' => [
-                'abcdefgh',
-                '#',
                 '5-',
+                '#',
+                'abcdefgh',
                 'abcd####',
             ],
             'to end from last position' => [
-                '123456789',
-                '*',
                 '9-',
+                '*',
+                '123456789',
                 '12345678*',
             ],
             'last two characters' => [
-                '123456',
-                '#',
                 '-2',
+                '#',
+                '123456',
                 '1234##',
             ],
             'last three characters' => [
-                'abcdefgh',
-                'X',
                 '-3',
+                'X',
+                'abcdefgh',
                 'abcdeXXX',
             ],
             'last all characters' => [
-                'hello',
-                '*',
                 '-5',
+                '*',
+                'hello',
                 '*****',
             ],
             'multiple delimiters in range' => [
-                'a#b@c$d',
-                '*',
                 '1-$',
+                '*',
+                'a#b@c$d',
                 '*****$d',
             ],
             'mixed character and numeric ranges' => [
-                'abc123def456',
-                '#',
                 '1-c,2-5',
+                '#',
+                'abc123def456',
                 '#####3def456',
             ],
             'backslash escaped character' => [
-                'path\to\file',
-                '*',
                 '1-\\\\',
+                '*',
+                'path\to\file',
                 '****\to\file',
             ],
             'unicode with accents full range' => [
-                'oftalmoscópico',
-                '*',
                 '1-',
+                '*',
+                'oftalmoscópico',
                 '**************',
             ],
             'unicode with accents specific range' => [
-                'oftalmoscópico',
-                '#',
                 '3-8',
+                '#',
+                'oftalmoscópico',
                 'of######cópico',
             ],
             'unicode with multiple accents' => [
-                'áéíóúãõçüñ',
-                '*',
                 '2-6,9',
+                '*',
+                'áéíóúãõçüñ',
                 'á*****õç*ñ',
             ],
             'unicode with accent as delimiter' => [
-                'áááóóóíííúúú',
-                '#',
                 'á-ú',
+                '#',
+                'áááóóóíííúúú',
                 '#########úúú',
             ],
             'unicode mixed ascii and accents' => [
-                'testéando123',
-                '*',
                 '1-5,8-10',
+                '*',
+                'testéando123',
                 '*****an***23',
             ],
             'unicode with escaped accent character' => [
-                'camiónés',
-                '#',
                 'm-\ó',
+                '#',
+                'camiónés',
                 '####ónés',
             ],
             'unicode last N characters with accents' => [
-                'españolñç',
-                '*',
                 '-4',
+                '*',
+                'españolñç',
                 'españ****',
             ],
             'unicode range with accent character not found' => [
-                'simples',
-                '#',
                 'x-z',
+                '#',
+                'simples',
                 'simples',
             ],
             'multiple ranges with dynamic to end 1-2,7-' => [
-                '1234567890',
-                '*',
                 '1-2,7-',
+                '*',
+                '1234567890',
                 '**3456****',
             ],
             'non-existent character delimiter' => [
-                'abc',
-                '*',
                 '@',
+                '*',
+                'abc',
                 'abc',
             ],
             'multiple ranges with dynamic to end 3-5,-8' => [
-                'abcdefghijklmnopqrs',
-                '#',
                 '3-5,-8',
+                '#',
+                'abcdefghijklmnopqrs',
                 'ab###fghijk########',
             ],
             'mixed numeric and dynamic ranges' => [
-                '123456789',
-                'X',
                 '2-3,6-',
+                'X',
+                '123456789',
                 '1XX45XXXX',
             ],
             // Japanese tests
             'japanese hiragana full mask' => [
-                'こんにちは世界',
-                '*',
                 '1-',
+                '*',
+                'こんにちは世界',
                 '*******',
             ],
             'japanese hiragana specific range' => [
-                'こんにちは世界',
-                '#',
                 '3-6',
+                '#',
+                'こんにちは世界',
                 'こん####界',
             ],
             'japanese mixed kanji hiragana' => [
-                '東京の天気',
-                '*',
                 '1-2',
+                '*',
+                '東京の天気',
                 '**の天気',
             ],
             'japanese last characters' => [
-                'お元気ですか',
-                '#',
                 '-3',
+                '#',
+                'お元気ですか',
                 'お元気###',
             ],
             // Chinese tests
             'chinese simplified full mask' => [
-                '你好世界',
-                '*',
                 '1-',
+                '*',
+                '你好世界',
                 '****',
             ],
             'chinese simplified middle range' => [
-                '中国人民共和国',
-                '#',
                 '2-5',
+                '#',
+                '中国人民共和国',
                 '中####和国',
             ],
             'chinese traditional' => [
-                '您好世界',
-                '*',
                 '3-4',
+                '*',
+                '您好世界',
                 '您好**',
             ],
             'chinese last characters' => [
-                '中文测试',
-                '#',
                 '-2',
+                '#',
+                '中文测试',
                 '中文##',
             ],
             // Thai tests
             'thai full mask' => [
-                'สวัสดีชาวโลก',
-                '*',
                 '1-',
+                '*',
+                'สวัสดีชาวโลก',
                 '************',
             ],
             'thai specific range' => [
-                'ขอบคุณครับ',
-                '#',
                 '2-5',
+                '#',
+                'ขอบคุณครับ',
                 'ข####ณครับ',
             ],
             'thai last characters' => [
-                'ยินดีครับ',
-                '*',
                 '-4',
+                '*',
+                'ยินดีครับ',
                 'ยินดี****',
             ],
             // Hebrew tests
             'hebrew full mask' => [
-                'שלום עולם',
-                '*',
                 '1-',
+                '*',
+                'שלום עולם',
                 '*********',
             ],
             'hebrew middle range' => [
-                'בוקר טוב',
-                '#',
                 '2-4',
-                'ב### טוב',
+                '#',
+                'บוקר טוב',
+                'บ### טוב',
             ],
             'hebrew last characters' => [
-                'מה שלומך',
-                '*',
                 '-3',
+                '*',
+                'מה שלומך',
                 'מה של***',
             ],
             // Mixed language tests
             'japanese and ascii' => [
-                'user田中@example.com',
-                '*',
                 '1-@',
+                '*',
+                'user田中@example.com',
                 '******@example.com',
             ],
             'chinese with english' => [
-                'hello中国world',
-                '#',
                 '6-7',
+                '#',
+                'hello中国world',
                 'hello##world',
             ],
             // RTL scripts complex scenarios
             'hebrew with numbers middle' => [
-                'מספר12345',
-                '*',
                 '5-8',
+                '*',
+                'מספר12345',
                 'מספר****5',
             ],
             'thai with special symbols' => [
-                '@email@ทดสอบ.com',
-                '#',
                 '1-@',
+                '#',
+                '@email@ทดสอบ.com',
                 '#email@ทดสอบ.com',
             ],
         ];
     }
 
     #[Test]
-    #[DataProvider('providerForValidMaskRanges')]
-    public function itShouldValidateValidMaskRanges(string $maskRanges): void
-    {
-        self::assertTrue($this->masker->isValidRange($maskRanges));
-    }
-
-    /** @return array<string, array{0: string}> */
-    public static function providerForValidMaskRanges(): array
-    {
-        return [
-            'numeric ranges' => ['1-3,5-7'],
-            'character range' => ['1-@'],
-            'no end' => ['2-'],
-            'escaped numeral' => ['1-\5'],
-            'to end pattern' => ['1-'],
-            'to end from position 3' => ['3-'],
-            'to end from position 5' => ['5-'],
-            'multiple ranges with dynamic to end' => ['1-2,7-'],
-            'mixed dynamic ranges' => ['3-5,-8'],
-            'last N pattern' => ['-5'],
-            'last one pattern' => ['-1'],
-        ];
-    }
-
-    #[Test]
     #[DataProvider('providerForInvalidMaskRanges')]
-    public function itShouldRejectInvalidMaskRanges(string $maskRanges): void
+    public function itShouldThrowExceptionForInvalidMaskRanges(string $range): void
     {
-        self::assertFalse($this->masker->isValidRange($maskRanges));
+        $this->expectException(InvalidFormatterException::class);
+        $this->expectExceptionMessage(sprintf('"%s" is not a valid mask range', $range));
+
+        new MaskFormatter($range);
     }
 
     /** @return array<string, array{0: string}> */
@@ -409,15 +381,5 @@ final class TextMaskerTest extends TestCase
 
             'range with same start and end' => ['1-1'],
         ];
-    }
-
-    #[Test]
-    #[DataProvider('providerForInvalidMaskRanges')]
-    public function itShouldThrowExceptionForInvalidMaskRanges(string $maskRanges): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid mask ranges provided');
-
-        $this->masker->mask('input', $maskRanges);
     }
 }

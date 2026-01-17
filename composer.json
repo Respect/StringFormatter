@@ -1,7 +1,7 @@
 {
-    "name": "respect/masker",
+    "name": "respect/string-formatter",
     "type": "library",
-    "description": "Mask sensitive text data using flexible range-based patterns",
+    "description": "A powerful and flexible way of formatting and transforming strings",
     "require": {
         "symfony/polyfill-mbstring": "^1.33",
         "php": "^8.5"
@@ -17,12 +17,12 @@
     "license": "ISC",
     "autoload": {
         "psr-4": {
-            "Respect\\Masker\\": "src/"
+            "Respect\\StringFormatter\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Respect\\Masker\\Test\\": "tests/"
+            "Respect\\StringFormatter\\Test\\": "tests/"
         }
     },
     "authors": [
@@ -34,7 +34,8 @@
     "scripts": {
         "lint": "phpcs",
         "test": "phpunit",
-        "analyze": "phpstan"
+        "analyze": "phpstan",
+        "format": "phpcbf"
     },
     "config": {
         "allow-plugins": {
