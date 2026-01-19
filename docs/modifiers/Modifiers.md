@@ -49,6 +49,7 @@ If no modifier is provided, the formatter uses `StringifyModifier` by default.
 ## Available Modifiers
 
 - **[AutoQuoteModifier](AutoQuoteModifier.md)** - Quotes string values by default, `|raw` bypasses quoting
+- **[ListModifier](ListModifier.md)** - Formats arrays as human-readable lists with conjunctions
 - **[StringifyModifier](StringifyModifier.md)** - Converts values to strings (default)
 
 ## Creating Custom Modifiers
