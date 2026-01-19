@@ -15,6 +15,10 @@ This file contains instructions for AI agents working on this repository.
 ## Testing & Quality Standards
 
 - **Unit tests**: Located in `tests/Unit/`
+- **Testing guidelines**: See `docs/contributing/testing-guidelines.md` for patterns
+- **Data-driven testing**: Use comprehensive providers with descriptive keys
+- **Arrange-Act-Assert**: Structure tests with clear setup, action, and assertion sections
+- **No mocks**: Create custom test implementations instead of PHPUnit mocks
 - **All contributions must include tests that pass**
 - **Code style**: Follow PSR-12 coding standard
 - **Static analysis**: Use PHPStan, fix any issues before submitting
