@@ -4,7 +4,8 @@
     "description": "A powerful and flexible way of formatting and transforming strings",
     "require": {
         "symfony/polyfill-mbstring": "^1.33",
-        "php": "^8.5"
+        "php": "^8.5",
+        "respect/stringifier": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.5",

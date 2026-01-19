@@ -16,10 +16,11 @@ composer require respect/string-formatter
 
 ## Formatters
 
-| Formatter                                    | Description                                      |
-| -------------------------------------------- | ------------------------------------------------ |
-| [MaskFormatter](docs/MaskFormatter.md)       | Range-based string masking with Unicode support  |
-| [PatternFormatter](docs/PatternFormatter.md) | Pattern-based string filtering with placeholders |
+| Formatter                                            | Description                                         |
+| ---------------------------------------------------- | --------------------------------------------------- |
+| [MaskFormatter](docs/MaskFormatter.md)               | Range-based string masking with Unicode support     |
+| [PatternFormatter](docs/PatternFormatter.md)         | Pattern-based string filtering with placeholders    |
+| [PlaceholderFormatter](docs/PlaceholderFormatter.md) | Template interpolation with placeholder replacement |
 
 ## Contributing
 
