@@ -52,6 +52,7 @@ If no modifier is provided, the formatter uses `StringifyModifier` by default.
 - **[ListModifier](ListModifier.md)** - Formats arrays as human-readable lists with conjunctions
 - **[QuoteModifier](QuoteModifier.md)** - Quotes string values using a stringifier quoter
 - **[StringifyModifier](StringifyModifier.md)** - Converts values to strings (default)
+- **[TransModifier](TransModifier.md)** - Translates string values using a Symfony translator
 
 ## Creating Custom Modifiers
 
