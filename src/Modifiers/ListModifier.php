@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Respect\StringFormatter\Modifiers;
 
+use Respect\StringFormatter\BypassTranslator;
 use Respect\StringFormatter\Modifier;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_map;
 use function array_pop;
@@ -19,6 +21,7 @@ final readonly class ListModifier implements Modifier
 
     public function __construct(
         private Modifier $nextModifier,
+        private TranslatorInterface $translator = new BypassTranslator(),
     ) {
     }
 
@@ -34,17 +37,17 @@ final readonly class ListModifier implements Modifier
 
         $modifiedValues = array_map(fn($item) => $this->nextModifier->modify($item, null), $value);
 
-        $glue = match ($pipe) {
+        $conjunction = $this->translator->trans(match ($pipe) {
             'list:and', 'list' => 'and',
             'list:or' => 'or',
-        };
+        });
 
         if (count($value) < 3) {
-            return implode(' ' . $glue . ' ', $modifiedValues);
+            return implode(' ' . $conjunction . ' ', $modifiedValues);
         }
 
         $last = array_pop($modifiedValues);
 
-        return implode(', ', $modifiedValues) . ', ' . $glue . ' ' . $last;
+        return implode(', ', $modifiedValues) . ', ' . $conjunction . ' ' . $last;
     }
 }

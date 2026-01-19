@@ -10,6 +10,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Respect\StringFormatter\Modifiers\ListModifier;
 use Respect\StringFormatter\Test\Helper\TestingModifier;
+use Respect\StringFormatter\Test\Helper\TestingTranslator;
 
 #[CoversClass(ListModifier::class)]
 final class ListModifierTest extends TestCase
@@ -104,6 +105,47 @@ final class ListModifierTest extends TestCase
                 'list',
                 ['a' => 'apple', 'b' => 'banana', 'c' => 'cherry', 'd' => 'date', 'e' => 'elderberry'],
                 'apple, banana, cherry, date, and elderberry',
+            ],
+        ];
+    }
+
+    /** @param array<int|string, string> $value */
+    #[Test]
+    #[DataProvider('providerTranslatedConjunctions')]
+    public function itShouldTranslateConjunctions(string $pipe, array $value, string $expected): void
+    {
+        $translator = new TestingTranslator(['and' => 'e', 'or' => 'ou']);
+
+        $modifier = new ListModifier(new TestingModifier(), $translator);
+
+        $result = $modifier->modify($value, $pipe);
+
+        self::assertSame($expected, $result);
+    }
+
+    /** @return array<string, array{0: string, 1: array<int|string, string>, 2: string}> */
+    public static function providerTranslatedConjunctions(): array
+    {
+        return [
+            'translated and with two values' => [
+                'list',
+                ['maçã', 'banana'],
+                'maçã e banana',
+            ],
+            'translated or with two values' => [
+                'list:or',
+                ['maçã', 'banana'],
+                'maçã ou banana',
+            ],
+            'translated and with multiple values' => [
+                'list:and',
+                ['maçã', 'banana', 'cereja'],
+                'maçã, banana, e cereja',
+            ],
+            'translated or with multiple values' => [
+                'list:or',
+                ['maçã', 'banana', 'cereja'],
+                'maçã, banana, ou cereja',
             ],
         ];
     }

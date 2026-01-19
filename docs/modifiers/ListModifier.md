@@ -41,3 +41,7 @@ echo $formatter->format('Choose {{fruits|list:or}}');
 | `['items' => ['a', 'b']]`      | `{{items\|list:or}}`  | `a or b`      |
 | `['items' => ['a', 'b', 'c']]` | `{{items\|list:and}}` | `a, b, and c` |
 | `['items' => ['a', 'b', 'c']]` | `{{items\|list:or}}`  | `a, b, or c`  |
+
+## Known Limitations
+
+This modifier uses the Oxford comma (a comma before the conjunction) for lists with 3+ items. This grammar rule is specific to English and may not work well with other languages.
