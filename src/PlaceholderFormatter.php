@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Respect\StringFormatter;
 
 use Respect\StringFormatter\Modifiers\ListModifier;
+use Respect\StringFormatter\Modifiers\QuoteModifier;
 use Respect\StringFormatter\Modifiers\StringifyModifier;
 
 use function array_key_exists;
@@ -16,7 +17,7 @@ final readonly class PlaceholderFormatter implements Formatter
     /** @param array<string, mixed> $parameters */
     public function __construct(
         private array $parameters,
-        private Modifier $modifier = new ListModifier(new StringifyModifier()),
+        private Modifier $modifier = new QuoteModifier(new ListModifier(new StringifyModifier())),
     ) {
     }
 
