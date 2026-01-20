@@ -33,6 +33,27 @@ When creating new formatters:
 
 All formatters must implement the `Respect\StringFormatter\Formatter` interface.
 
+## Modifier Development
+
+When creating new modifiers:
+
+1. **Follow Chain of Responsibility pattern**: Check pipe value and delegate to next modifier
+2. **Use template structure**: Similar to `src/Modifier/QuoteModifier.php`
+3. **Test with TestingModifier**: Located in `tests/Helper/TestingModifier.php`
+4. **Handle type checking**: Always check input types before processing
+5. **Return string values**: Modifiers must return strings
+6. **Use Stringifier Quoter**: For string operations, inject `\Respect\Stringifier\Quoter` with CodeQuoter as default
+
+All modifiers must implement the `Respect\StringFormatter\Modifier` interface.
+
+## Testing Guidelines
+
+1. **Avoid PHPUnit mocks**: Create custom test implementations instead of using createMock()
+2. **Use custom test quoter**: Follow pattern in `tests/Helper/TestingQuoter.php`
+3. **Test contracts not implementations**: Verify interactions without depending on specific behavior
+4. **Make test properties public**: When using anonymous classes to access test state
+5. **Verify method calls**: Track whether methods were called and with what parameters
+
 ## Commit Guidelines
 
 Follow the detailed rules in `docs/contributing/commit-guidelines.md`:

@@ -137,7 +137,7 @@ public function itShouldThrowExceptionForInvalidInput(): void
 
 - Create real instances of any objects needed for testing
 - Use custom test implementations instead of PHPUnit mocks
-- Test through public APIs like `format()` and `formatWith()`
+- Test through public APIs like `format()` and `formatUsing()`
 
 ### When Custom Implementations Are Needed
 

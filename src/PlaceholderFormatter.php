@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Respect\StringFormatter;
 
-use Respect\Stringifier\HandlerStringifier;
-use Respect\Stringifier\Stringifier;
+use Respect\StringFormatter\Modifiers\StringifyModifier;
 
 use function array_key_exists;
 use function is_string;
@@ -13,29 +12,26 @@ use function preg_replace_callback;
 
 final readonly class PlaceholderFormatter implements Formatter
 {
-    private Stringifier $stringifier;
-
     /** @param array<string, mixed> $parameters */
     public function __construct(
         private array $parameters,
-        Stringifier|null $stringifier = null,
+        private Modifier $modifier = new StringifyModifier(),
     ) {
-        $this->stringifier = $stringifier ?? HandlerStringifier::create();
     }
 
     public function format(string $input): string
     {
-        return $this->formatWithParameters($input, $this->parameters);
+        return $this->formatUsingParameters($input, $this->parameters);
     }
 
     /** @param array<string, mixed> $parameters */
-    public function formatWith(string $input, array $parameters): string
+    public function formatUsing(string $input, array $parameters): string
     {
-        return $this->formatWithParameters($input, $this->parameters + $parameters);
+        return $this->formatUsingParameters($input, $this->parameters + $parameters);
     }
 
     /** @param array<string, mixed> $parameters */
-    private function formatWithParameters(string $input, array $parameters): string
+    private function formatUsingParameters(string $input, array $parameters): string
     {
         return (string) preg_replace_callback(
             '/{{(\w+)(\|([^}]+))?}}/',
@@ -50,17 +46,19 @@ final readonly class PlaceholderFormatter implements Formatter
      */
     private function processPlaceholder(array $matches, array $parameters): string
     {
-        [$placeholder, $name] = $matches;
+        $placeholder = $matches[0] ?? '';
+        $name = $matches[1] ?? '';
+        $pipe = $matches[3] ?? null;
 
         if (!array_key_exists($name, $parameters)) {
             return $placeholder;
         }
 
         $value = $parameters[$name];
-        if (is_string($value)) {
+        if (is_string($value) && $pipe === null) {
             return $value;
         }
 
-        return $this->stringifier->stringify($value);
+        return $this->modifier->modify($value, $pipe);
     }
 }

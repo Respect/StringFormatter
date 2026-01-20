@@ -9,9 +9,11 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Respect\StringFormatter\PlaceholderFormatter;
-use Respect\Stringifier\DumpStringifier;
+use Respect\StringFormatter\Test\Helper\TestingModifier;
 use stdClass;
 use Stringable;
+
+use function sprintf;
 
 #[CoversClass(PlaceholderFormatter::class)]
 final class PlaceholderFormatterTest extends TestCase
@@ -384,15 +386,18 @@ final class PlaceholderFormatterTest extends TestCase
     }
 
     #[Test]
-    public function itShouldAcceptCustomStringifier(): void
+    public function itShouldAcceptCustomModifier(): void
     {
-        $stringifier = new DumpStringifier();
         $value = new stdClass();
+        $pipe = 'pipe';
+        $placeholder = 'placeholder';
 
-        $expected = 'The value is ' . $stringifier->stringify($value);
+        $modifier = new TestingModifier();
 
-        $formatter = new PlaceholderFormatter(['value' => $value], $stringifier);
-        $actual = $formatter->format('The value is {{value}}');
+        $expected = 'The value is ' . $modifier->modify($value, $pipe);
+
+        $formatter = new PlaceholderFormatter([$placeholder => $value], $modifier);
+        $actual = $formatter->format(sprintf('The value is {{%s|%s}}', $placeholder, $pipe));
 
         self::assertSame($expected, $actual);
     }
@@ -462,7 +467,7 @@ final class PlaceholderFormatterTest extends TestCase
         string $expected,
     ): void {
         $formatter = new PlaceholderFormatter($constructorParameters);
-        $actual = $formatter->formatWith($template, $additionalParameters);
+        $actual = $formatter->formatUsing($template, $additionalParameters);
 
         self::assertSame($expected, $actual);
     }
@@ -539,8 +544,8 @@ final class PlaceholderFormatterTest extends TestCase
     {
         $formatter = new PlaceholderFormatter(['name' => 'John']);
 
-        // Call formatWith first
-        $withResult = $formatter->formatWith('Hello {{name}} and {{other}}!', ['other' => 'World']);
+        // Call formatUsing first
+        $withResult = $formatter->formatUsing('Hello {{name}} and {{other}}!', ['other' => 'World']);
 
         // Then call format - should still work with original parameters only
         $formatResult = $formatter->format('Hello {{name}} and {{other}}!');
