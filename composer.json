@@ -4,8 +4,8 @@
     "description": "A powerful and flexible way of formatting and transforming strings",
     "require": {
         "php": "^8.5",
-        "ext-ctype": "*",
         "respect/stringifier": "^3.0",
+        "symfony/polyfill-ctype": "^1.33",
         "symfony/polyfill-mbstring": "^1.33",
         "symfony/translation-contracts": "^3.6"
     },
