@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # PlaceholderFormatter Modifiers
 
 Modifiers transform placeholder values before they're inserted into the final string. They're applied using the `|` syntax: `{{placeholder|modifier}}`.

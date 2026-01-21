@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # Submitting Changes
 
 1. **Create a feature branch**

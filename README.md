@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # Respect\StringFormatter
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Respect/StringFormatter/continuous-integration.yml?branch=main&style=flat-square)](https://github.com/Respect/StringFormatter/actions/workflows/continuous-integration.yml)

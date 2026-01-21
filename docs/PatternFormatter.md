@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # PatternFormatter
 
 The `PatternFormatter` enables advanced pattern-based string transformation using filtering patterns and transformation directives.

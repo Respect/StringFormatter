@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # ListModifier
 
 The `|list` modifier formats arrays into human-readable lists with conjunctions.

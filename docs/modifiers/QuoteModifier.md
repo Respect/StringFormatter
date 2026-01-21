@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # QuoteModifier
 
 The `|quote` modifier wraps string values with a configurable quote character (default: backtick `` ` ``).

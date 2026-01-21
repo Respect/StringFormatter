@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # Adding New Formatters
 
 StringFormatter is designed to be extensible. All formatters must implement the `Respect\StringFormatter\Formatter` interface.

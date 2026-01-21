@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # StringPassthroughModifier
 
 The `StringPassthroughModifier` returns string values unchanged and delegates non-string values to the next modifier in the chain.

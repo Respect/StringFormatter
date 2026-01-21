@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # PlaceholderFormatter
 
 The `PlaceholderFormatter` replaces `{{placeholder}}` markers in strings with values from a parameters array.

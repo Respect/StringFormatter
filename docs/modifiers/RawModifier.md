@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (c) Respect Project Contributors
+SPDX-License-Identifier: ISC
+SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+-->
+
 # RawModifier
 
 The `|raw` modifier returns scalar values as raw strings, converting booleans to `1`/`0`. Non-scalar values delegate to the next modifier.
