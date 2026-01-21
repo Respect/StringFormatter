@@ -28,7 +28,7 @@ Install `symfony/translation` and inject a real translator:
 ```php
 use Respect\StringFormatter\PlaceholderFormatter;
 use Respect\StringFormatter\Modifiers\TransModifier;
-use Respect\StringFormatter\Modifiers\StringifyModifier;
+use Respect\StringFormatter\Modifiers\StringPassthroughModifier;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 

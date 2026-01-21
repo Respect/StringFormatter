@@ -32,26 +32,30 @@ You can specify a custom modifier chain when creating a `PlaceholderFormatter`:
 
 ```php
 use Respect\StringFormatter\PlaceholderFormatter;
-use Respect\StringFormatter\Modifiers\AutoQuoteModifier;
+use Respect\StringFormatter\Modifiers\RawModifier;
 use Respect\StringFormatter\Modifiers\StringifyModifier;
 
 $formatter = new PlaceholderFormatter(
-    ['name' => 'John'],
-    new AutoQuoteModifier(new StringifyModifier()),
+    ['name' => 'John', 'active' => true],
+    new RawModifier(new StringifyModifier()),
 );
 
 echo $formatter->format('Hello {{name}}');
 // Output: Hello "John"
+
+echo $formatter->format('Hello {{name|raw}}');
+// Output: Hello John
 ```
 
 If no modifier is provided, the formatter uses `StringifyModifier` by default.
 
 ## Available Modifiers
 
-- **[AutoQuoteModifier](AutoQuoteModifier.md)** - Quotes string values by default, `|raw` bypasses quoting
 - **[ListModifier](ListModifier.md)** - Formats arrays as human-readable lists with conjunctions
 - **[QuoteModifier](QuoteModifier.md)** - Quotes string values using a stringifier quoter
-- **[StringifyModifier](StringifyModifier.md)** - Converts values to strings (default)
+- **[RawModifier](RawModifier.md)** - Returns scalar values as raw strings with `|raw` pipe
+- **[StringifyModifier](StringifyModifier.md)** - Always converts values to strings (default)
+- **[StringPassthroughModifier](StringPassthroughModifier.md)** - Returns strings unchanged, delegates non-strings to next modifier
 - **[TransModifier](TransModifier.md)** - Translates string values using a Symfony translator
 
 ## Creating Custom Modifiers

@@ -11,46 +11,16 @@ use PHPUnit\Framework\TestCase;
 use Respect\StringFormatter\Modifiers\InvalidModifierPipeException;
 use Respect\StringFormatter\Modifiers\StringifyModifier;
 use Respect\StringFormatter\Test\Helper\TestingStringifier;
-
-use function fopen;
-use function uniqid;
+use stdClass;
 
 #[CoversClass(StringifyModifier::class)]
 final class StringifyModifierTest extends TestCase
 {
-    /** @return array<string, array{0: mixed}> */
-    public static function providerForModifiableValues(): array
-    {
-        return [
-            'array value' => [['a', 'b', 'c']],
-            'integer value' => [42],
-            'float value' => [3.14159],
-            'boolean true' => [true],
-            'boolean false' => [false],
-            'null value' => [null],
-            'object value' => [(object) ['key' => 'value']],
-            'empty array' => [[]],
-            'resource' => [fopen('php://memory', 'r')],
-            'control characters' => ["\n\r\t"],
-        ];
-    }
-
-    /** @return array<string, array{0: string}> */
-    public static function providerForNonModifiableValues(): array
-    {
-        return [
-            'string value' => ['test string'],
-            'empty string' => [''],
-        ];
-    }
-
     #[Test]
-    #[DataProvider('providerForModifiableValues')]
-    public function itShouldDelegateToStringifierWhenValueIsNotString(mixed $value): void
+    #[DataProvider('providerForValues')]
+    public function itShouldAlwaysStringifyValues(mixed $value, string $expected): void
     {
-        $expected = uniqid();
-        $stringifier = new TestingStringifier($expected);
-        $modifier = new StringifyModifier($stringifier);
+        $modifier = new StringifyModifier();
 
         $actual = $modifier->modify($value, null);
 
@@ -58,25 +28,51 @@ final class StringifyModifierTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('providerForNonModifiableValues')]
-    public function itShouldByPassTheStringifierWhenValueIsString(string $value): void
+    public function itShouldUseCustomStringifierWhenProvided(): void
     {
-        $modifier = new StringifyModifier(new TestingStringifier());
+        $stringifier = new TestingStringifier('custom value');
+        $modifier = new StringifyModifier($stringifier);
 
-        $actual = $modifier->modify($value, null);
+        $actual = $modifier->modify('test', null);
 
-        self::assertSame($value, $actual);
+        self::assertSame('custom value', $actual);
     }
 
     #[Test]
-    public function itShouldThrowExceptionWhenPipeIsNotNull(): void
+    #[DataProvider('providerForInvalidPipes')]
+    public function itShouldThrowExceptionWhenPipeIsProvided(string $pipe): void
     {
-        $modifier = new StringifyModifier(new TestingStringifier());
-        $pipe = 'existing_pipe_value';
+        $modifier = new StringifyModifier();
 
         $this->expectException(InvalidModifierPipeException::class);
-        $this->expectExceptionMessage('"existing_pipe_value" is not recognized as a valid pipe');
+        $this->expectExceptionMessage('"' . $pipe . '" is not recognized as a valid pipe');
 
-        $modifier->modify('test', $pipe);
+        $modifier->modify('value', $pipe);
+    }
+
+    /** @return array<string, array{0: mixed, 1: string}> */
+    public static function providerForValues(): array
+    {
+        return [
+            'string' => ['some string', '"some string"'],
+            'integer' => [123, '123'],
+            'float' => [123.456, '123.456'],
+            'boolean true' => [true, '`true`'],
+            'boolean false' => [false, '`false`'],
+            'array' => [['not', 'scalar'], '`["not", "scalar"]`'],
+            'object' => [new stdClass(), '`stdClass {}`'],
+            'null' => [null, '`null`'],
+        ];
+    }
+
+    /** @return array<string, array{0: string}> */
+    public static function providerForInvalidPipes(): array
+    {
+        return [
+            'raw' => ['raw'],
+            'upper' => ['upper'],
+            'lower' => ['lower'],
+            'any pipe' => ['any_pipe'],
+        ];
     }
 }
