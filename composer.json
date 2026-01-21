@@ -3,20 +3,21 @@
     "type": "library",
     "description": "A powerful and flexible way of formatting and transforming strings",
     "require": {
-        "symfony/polyfill-mbstring": "^1.33",
         "php": "^8.5",
+        "ext-ctype": "*",
         "respect/stringifier": "^3.0",
+        "symfony/polyfill-mbstring": "^1.33",
         "symfony/translation-contracts": "^3.6"
     },
     "suggest": {
         "symfony/translation": "For translation support in TransModifier (^6.0|^7.0)"
     },
     "require-dev": {
-        "phpunit/phpunit": "^12.5",
-        "phpstan/phpstan": "^2.1",
         "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^12.5",
         "respect/coding-standard": "^5.0",
         "symfony/translation": "^6.0|^7.0"
     },
@@ -48,6 +49,7 @@
         "allow-plugins": {
             "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+        },
+        "sort-packages": true
     }
 }

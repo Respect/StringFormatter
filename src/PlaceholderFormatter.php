@@ -10,7 +10,6 @@ use Respect\StringFormatter\Modifiers\StringifyModifier;
 use Respect\StringFormatter\Modifiers\TransModifier;
 
 use function array_key_exists;
-use function is_string;
 use function preg_replace_callback;
 
 final readonly class PlaceholderFormatter implements Formatter
@@ -57,11 +56,6 @@ final readonly class PlaceholderFormatter implements Formatter
             return $placeholder;
         }
 
-        $value = $parameters[$name];
-        if (is_string($value) && $pipe === null) {
-            return $value;
-        }
-
-        return $this->modifier->modify($value, $pipe);
+        return $this->modifier->modify($parameters[$name], $pipe);
     }
 }

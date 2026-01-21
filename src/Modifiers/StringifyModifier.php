@@ -8,6 +8,7 @@ use Respect\StringFormatter\Modifier;
 use Respect\Stringifier\HandlerStringifier;
 use Respect\Stringifier\Stringifier;
 
+use function ctype_cntrl;
 use function is_string;
 use function sprintf;
 
@@ -27,7 +28,7 @@ final readonly class StringifyModifier implements Modifier
             throw new InvalidModifierPipeException(sprintf('"%s" is not recognized as a valid pipe', $pipe));
         }
 
-        if (is_string($value)) {
+        if (is_string($value) && !ctype_cntrl($value)) {
             return $value;
         }
 

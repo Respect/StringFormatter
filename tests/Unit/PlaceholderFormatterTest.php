@@ -402,6 +402,18 @@ final class PlaceholderFormatterTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    #[Test]
+    public function itShouldAlwaysCallModifierWhenParameterExists(): void
+    {
+        $modifier = new TestingModifier('modified');
+        $placeholder = 'name';
+
+        $formatter = new PlaceholderFormatter([$placeholder => 'John'], $modifier);
+        $actual = $formatter->format(sprintf('Hello {{%s}}!', $placeholder));
+
+        self::assertSame('Hello modified!', $actual);
+    }
+
     /** @param array<string, mixed> $parameters */
     #[Test]
     #[DataProvider('providerForRealWorldUseCases')]

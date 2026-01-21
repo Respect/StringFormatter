@@ -31,6 +31,7 @@ final class StringifyModifierTest extends TestCase
             'object value' => [(object) ['key' => 'value']],
             'empty array' => [[]],
             'resource' => [fopen('php://memory', 'r')],
+            'control characters' => ["\n\r\t"],
         ];
     }
 
