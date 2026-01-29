@@ -20,6 +20,20 @@ A powerful and flexible PHP library for formatting and transforming strings.
 composer require respect/string-formatter
 ```
 
+## Usage
+
+You can use individual formatters directly or chain multiple formatters together using the `FormatterBuilder`:
+
+```php
+use Respect\StringFormatter\FormatterBuilder as f;
+
+echo f::create()
+    ->mask('7-12')
+    ->pattern('#### #### #### ####')
+    ->format('1234123412341234');
+// Output: 1234 12** **** 1234
+```
+
 ## Formatters
 
 | Formatter                                            | Description                                         |
