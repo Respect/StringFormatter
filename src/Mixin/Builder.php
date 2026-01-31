@@ -18,17 +18,19 @@ interface Builder
 {
     public static function area(string $unit): FormatterBuilder;
 
+    public static function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
+
     public static function imperialArea(string $unit): FormatterBuilder;
 
     public static function imperialLength(string $unit): FormatterBuilder;
 
     public static function imperialMass(string $unit): FormatterBuilder;
 
-    public static function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
-
     public static function mask(string $range, string $replacement = '*'): FormatterBuilder;
 
     public static function metric(string $unit): FormatterBuilder;
+
+    public static function metricMass(string $unit): FormatterBuilder;
 
     public static function number(
         int $decimals = 0,
@@ -36,12 +38,13 @@ interface Builder
         string $thousandsSeparator = ',',
     ): FormatterBuilder;
 
-    public static function metricMass(string $unit): FormatterBuilder;
-
     public static function pattern(string $pattern): FormatterBuilder;
 
     /** @param array<string, mixed> $parameters */
     public static function placeholder(array $parameters): FormatterBuilder;
 
     public static function time(string $unit): FormatterBuilder;
+
+    /** @param 'both'|'left'|'right' $side */
+    public static function trim(string $side = 'both', string $mask = " \t\n\r\0\x0B"): FormatterBuilder;
 }
