@@ -18,6 +18,8 @@ interface Builder
 {
     public static function area(string $unit): FormatterBuilder;
 
+    public static function creditCard(): FormatterBuilder;
+
     public static function imperialArea(string $unit): FormatterBuilder;
 
     public static function imperialLength(string $unit): FormatterBuilder;

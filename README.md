@@ -59,6 +59,7 @@ See the [PlaceholderFormatter documentation](docs/PlaceholderFormatter.md) and [
 | Formatter                                                  | Description                                                      |
 | ---------------------------------------------------------- | ---------------------------------------------------------------- |
 | [AreaFormatter](docs/AreaFormatter.md)                     | Metric area promotion (mm², cm², m², a, ha, km²)                 |
+| [CreditCardFormatter](docs/CreditCardFormatter.md)         | Credit card number formatting with auto-detection                |
 | [DateFormatter](docs/DateFormatter.md)                     | Date and time formatting with flexible parsing                   |
 | [ImperialAreaFormatter](docs/ImperialAreaFormatter.md)     | Imperial area promotion (in², ft², yd², ac, mi²)                 |
 | [ImperialLengthFormatter](docs/ImperialLengthFormatter.md) | Imperial length promotion (in, ft, yd, mi)                       |

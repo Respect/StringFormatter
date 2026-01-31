@@ -18,6 +18,8 @@ interface Chain extends Formatter
 {
     public function area(string $unit): FormatterBuilder;
 
+    public function creditCard(string|null $pattern = null): FormatterBuilder;
+
     public function imperialArea(string $unit): FormatterBuilder;
 
     public function imperialLength(string $unit): FormatterBuilder;
