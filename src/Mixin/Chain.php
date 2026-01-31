@@ -50,5 +50,8 @@ interface Chain extends Formatter
 
     public function time(string $unit): Chain;
 
+    /** @param 'both'|'left'|'right' $side */
+    public function trim(string $side, string|null $characters): Chain;
+
     public function uppercase(): Chain;
 }

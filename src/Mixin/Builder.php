@@ -51,5 +51,8 @@ interface Builder
 
     public static function time(string $unit): Chain;
 
+    /** @param 'both'|'left'|'right' $side */
+    public static function trim(string $side, string|null $characters): Chain;
+
     public static function uppercase(): Chain;
 }
