@@ -2,6 +2,7 @@
 SPDX-FileCopyrightText: (c) Respect Project Contributors
 SPDX-License-Identifier: ISC
 SPDX-FileContributor: Henrique Moody <henriquemoody@gmail.com>
+SPDX-FileContributor: Alexandre Gomes Gaigalas <alganet@gmail.com>
 -->
 
 # Respect\StringFormatter
@@ -38,7 +39,9 @@ echo f::create()
 
 | Formatter                                            | Description                                         |
 | ---------------------------------------------------- | --------------------------------------------------- |
+| [DateFormatter](docs/DateFormatter.md)               | Date and time formatting with flexible parsing      |
 | [MaskFormatter](docs/MaskFormatter.md)               | Range-based string masking with Unicode support     |
+| [NumberFormatter](docs/NumberFormatter.md)           | Number formatting with thousands and decimal separators |
 | [PatternFormatter](docs/PatternFormatter.md)         | Pattern-based string filtering with placeholders    |
 | [PlaceholderFormatter](docs/PlaceholderFormatter.md) | Template interpolation with placeholder replacement |
 
