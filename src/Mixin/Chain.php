@@ -48,4 +48,6 @@ interface Chain extends Formatter
     public function placeholder(array $parameters): FormatterBuilder;
 
     public function time(string $unit): FormatterBuilder;
+
+    public function uppercase(): FormatterBuilder;
 }

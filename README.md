@@ -72,6 +72,7 @@ See the [PlaceholderFormatter documentation](docs/PlaceholderFormatter.md) and [
 | [PlaceholderFormatter](docs/PlaceholderFormatter.md)           | Template interpolation with placeholder replacement              |
 | [SecureCreditCardFormatter](docs/SecureCreditCardFormatter.md) | Masked credit card formatting for secure display                 |
 | [TimeFormatter](docs/TimeFormatter.md)                         | Time promotion (mil, c, dec, y, mo, w, d, h, min, s, ms, us, ns) |
+| [UppercaseFormatter](docs/UppercaseFormatter.md)               | Convert string to uppercase                                      |
 
 ## Contributing
 

@@ -48,4 +48,6 @@ interface Builder
     public static function placeholder(array $parameters): FormatterBuilder;
 
     public static function time(string $unit): FormatterBuilder;
+
+    public static function uppercase(): FormatterBuilder;
 }
