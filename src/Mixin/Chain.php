@@ -18,7 +18,9 @@ interface Chain extends Formatter
 {
     public function area(string $unit): FormatterBuilder;
 
-    public function creditCard(string|null $pattern = null): FormatterBuilder;
+    public function creditCard(): FormatterBuilder;
+
+    public function secureCreditCard(string $maskChar = '*'): FormatterBuilder;
 
     public function imperialArea(string $unit): FormatterBuilder;
 

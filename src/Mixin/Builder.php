@@ -20,6 +20,8 @@ interface Builder
 
     public static function creditCard(): FormatterBuilder;
 
+    public static function secureCreditCard(string $maskChar = '*'): FormatterBuilder;
+
     public static function imperialArea(string $unit): FormatterBuilder;
 
     public static function imperialLength(string $unit): FormatterBuilder;

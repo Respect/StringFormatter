@@ -56,21 +56,22 @@ See the [PlaceholderFormatter documentation](docs/PlaceholderFormatter.md) and [
 
 ## Formatters
 
-| Formatter                                                  | Description                                                      |
-| ---------------------------------------------------------- | ---------------------------------------------------------------- |
-| [AreaFormatter](docs/AreaFormatter.md)                     | Metric area promotion (mm², cm², m², a, ha, km²)                 |
-| [CreditCardFormatter](docs/CreditCardFormatter.md)         | Credit card number formatting with auto-detection                |
-| [DateFormatter](docs/DateFormatter.md)                     | Date and time formatting with flexible parsing                   |
-| [ImperialAreaFormatter](docs/ImperialAreaFormatter.md)     | Imperial area promotion (in², ft², yd², ac, mi²)                 |
-| [ImperialLengthFormatter](docs/ImperialLengthFormatter.md) | Imperial length promotion (in, ft, yd, mi)                       |
-| [ImperialMassFormatter](docs/ImperialMassFormatter.md)     | Imperial mass promotion (oz, lb, st, ton)                        |
-| [MaskFormatter](docs/MaskFormatter.md)                     | Range-based string masking with Unicode support                  |
-| [MassFormatter](docs/MassFormatter.md)                     | Metric mass promotion (mg, g, kg, t)                             |
-| [MetricFormatter](docs/MetricFormatter.md)                 | Metric length promotion (mm, cm, m, km)                          |
-| [NumberFormatter](docs/NumberFormatter.md)                 | Number formatting with thousands and decimal separators          |
-| [PatternFormatter](docs/PatternFormatter.md)               | Pattern-based string filtering with placeholders                 |
-| [PlaceholderFormatter](docs/PlaceholderFormatter.md)       | Template interpolation with placeholder replacement              |
-| [TimeFormatter](docs/TimeFormatter.md)                     | Time promotion (mil, c, dec, y, mo, w, d, h, min, s, ms, us, ns) |
+| Formatter                                                      | Description                                                      |
+| -------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [AreaFormatter](docs/AreaFormatter.md)                         | Metric area promotion (mm², cm², m², a, ha, km²)                 |
+| [CreditCardFormatter](docs/CreditCardFormatter.md)             | Credit card number formatting with auto-detection                |
+| [DateFormatter](docs/DateFormatter.md)                         | Date and time formatting with flexible parsing                   |
+| [ImperialAreaFormatter](docs/ImperialAreaFormatter.md)         | Imperial area promotion (in², ft², yd², ac, mi²)                 |
+| [ImperialLengthFormatter](docs/ImperialLengthFormatter.md)     | Imperial length promotion (in, ft, yd, mi)                       |
+| [ImperialMassFormatter](docs/ImperialMassFormatter.md)         | Imperial mass promotion (oz, lb, st, ton)                        |
+| [MaskFormatter](docs/MaskFormatter.md)                         | Range-based string masking with Unicode support                  |
+| [MassFormatter](docs/MassFormatter.md)                         | Metric mass promotion (mg, g, kg, t)                             |
+| [MetricFormatter](docs/MetricFormatter.md)                     | Metric length promotion (mm, cm, m, km)                          |
+| [NumberFormatter](docs/NumberFormatter.md)                     | Number formatting with thousands and decimal separators          |
+| [PatternFormatter](docs/PatternFormatter.md)                   | Pattern-based string filtering with placeholders                 |
+| [PlaceholderFormatter](docs/PlaceholderFormatter.md)           | Template interpolation with placeholder replacement              |
+| [SecureCreditCardFormatter](docs/SecureCreditCardFormatter.md) | Masked credit card formatting for secure display                 |
+| [TimeFormatter](docs/TimeFormatter.md)                         | Time promotion (mil, c, dec, y, mo, w, d, h, min, s, ms, us, ns) |
 
 ## Contributing
 
