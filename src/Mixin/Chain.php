@@ -30,6 +30,8 @@ interface Chain extends Formatter
 
     public function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
 
+    public function lowercase(): FormatterBuilder;
+
     public function mask(string $range, string $replacement = '*'): FormatterBuilder;
 
     public function metric(string $unit): FormatterBuilder;

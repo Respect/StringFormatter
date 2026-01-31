@@ -30,6 +30,8 @@ interface Builder
 
     public static function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
 
+    public static function lowercase(): FormatterBuilder;
+
     public static function mask(string $range, string $replacement = '*'): FormatterBuilder;
 
     public static function metric(string $unit): FormatterBuilder;

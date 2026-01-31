@@ -64,6 +64,7 @@ See the [PlaceholderFormatter documentation](docs/PlaceholderFormatter.md) and [
 | [ImperialAreaFormatter](docs/ImperialAreaFormatter.md)         | Imperial area promotion (in², ft², yd², ac, mi²)                 |
 | [ImperialLengthFormatter](docs/ImperialLengthFormatter.md)     | Imperial length promotion (in, ft, yd, mi)                       |
 | [ImperialMassFormatter](docs/ImperialMassFormatter.md)         | Imperial mass promotion (oz, lb, st, ton)                        |
+| [LowercaseFormatter](docs/LowercaseFormatter.md)               | Convert string to lowercase                                      |
 | [MaskFormatter](docs/MaskFormatter.md)                         | Range-based string masking with Unicode support                  |
 | [MassFormatter](docs/MassFormatter.md)                         | Metric mass promotion (mg, g, kg, t)                             |
 | [MetricFormatter](docs/MetricFormatter.md)                     | Metric length promotion (mm, cm, m, km)                          |
