@@ -14,10 +14,12 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Respect\StringFormatter\Internal\CompiledPattern;
 use Respect\StringFormatter\InvalidFormatterException;
 use Respect\StringFormatter\PatternFormatter;
 
 #[CoversClass(PatternFormatter::class)]
+#[CoversClass(CompiledPattern::class)]
 final class PatternFormatterTest extends TestCase
 {
     #[Test]
@@ -312,6 +314,11 @@ final class PatternFormatterTest extends TestCase
                 'ñ-###',
                 'ábc',
                 'ñ-ábc',
+            ],
+            'unicode edge-case' => [
+                '0-0-0',
+                'ⅫⅫⅫ',
+                'Ⅻ-Ⅻ-Ⅻ',
             ],
         ];
     }
