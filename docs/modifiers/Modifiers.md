@@ -57,6 +57,7 @@ If no modifier is provided, the formatter uses `StringifyModifier` by default.
 
 ## Available Modifiers
 
+- **[FormatterModifier](FormatterModifier.md)** - Enables using any formatter as a modifier (e.g., `date:Y-m-d`, `number:2`)
 - **[ListModifier](ListModifier.md)** - Formats arrays as human-readable lists with conjunctions
 - **[QuoteModifier](QuoteModifier.md)** - Quotes string values using a stringifier quoter
 - **[RawModifier](RawModifier.md)** - Returns scalar values as raw strings with `|raw` pipe
