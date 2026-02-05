@@ -47,7 +47,7 @@ final readonly class PlaceholderFormatter implements Formatter
     private function formatUsingParameters(string $input, array $parameters): string
     {
         return (string) preg_replace_callback(
-            '/{{(\w+)(\|([^}]+))?}}/',
+            '/{{(\w+)(\|([^}\\\\]*(?:\\\\.[^}\\\\]*)*))?}}/',
             fn(array $matches) => $this->processPlaceholder($matches, $parameters),
             $input,
         );

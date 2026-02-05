@@ -17,8 +17,8 @@ use Respect\StringFormatter\Modifier;
 use Throwable;
 
 use function array_slice;
-use function explode;
 use function is_string;
+use function preg_split;
 use function ucfirst;
 
 final readonly class FormatterModifier implements Modifier
@@ -35,7 +35,7 @@ final readonly class FormatterModifier implements Modifier
         }
 
         // Try to parse as a formatter
-        $parts = explode(':', $pipe);
+        $parts = preg_split('/(?<!\\\\):/', $pipe) ?: [];
         $formatterName = $parts[0];
         $arguments = array_slice($parts, 1);
 
