@@ -27,6 +27,18 @@ The formatter name is converted to a formatter class name by:
 
 Arguments after the formatter name (separated by `:`) are passed to the formatter's constructor.
 
+### Escaping Special Characters
+
+If your formatter arguments contain special characters (`:` or `|`), you can escape them with a backslash:
+
+- Escape colons in arguments: `\:`
+- Escape pipes in arguments: `\|`
+
+```
+{{placeholder|pattern:##\:##}}        // Pattern with colon: 12:34
+{{placeholder|pattern:###\|###}}      // Pattern with pipe: 123|456
+```
+
 ## Examples
 
 ### Date Formatting
@@ -90,6 +102,25 @@ $formatter = new PlaceholderFormatter(['phone' => '1234567890']);
 
 echo $formatter->format('Phone: {{phone|pattern:(###) ###-####}}');
 // Output: Phone: (123) 456-7890
+```
+
+### Escaping in Pattern Arguments
+
+When your pattern contains special characters like `:` or `|`, escape them with a backslash:
+
+```php
+$formatter = new PlaceholderFormatter([
+    'time' => '1234',
+    'value' => '123456',
+]);
+
+// Pattern with escaped colon
+echo $formatter->format('Time: {{time|pattern:##\:##}}');
+// Output: Time: 12:34
+
+// Pattern with escaped pipe
+echo $formatter->format('Value: {{value|pattern:###\|###}}');
+// Output: Value: 123|456
 ```
 
 ### Metric Formatting
