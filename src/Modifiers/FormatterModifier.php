@@ -16,10 +16,10 @@ use Respect\StringFormatter\Formatter;
 use Respect\StringFormatter\Modifier;
 use Throwable;
 
+use function array_slice;
 use function explode;
 use function is_string;
 use function ucfirst;
-use function array_slice;
 
 final readonly class FormatterModifier implements Modifier
 {
@@ -70,7 +70,7 @@ final readonly class FormatterModifier implements Modifier
 
         try {
             $reflection = new ReflectionClass($class);
-            
+
             return $reflection->newInstanceArgs($arguments);
         } catch (ReflectionException) {
             return null;
