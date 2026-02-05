@@ -35,6 +35,25 @@ echo f::create()
 // Output: 1234 12** **** 1234
 ```
 
+### Using Formatters as Modifiers
+
+The `PlaceholderFormatter` allows you to use any formatter as a modifier within templates:
+
+```php
+use Respect\StringFormatter\PlaceholderFormatter;
+
+$formatter = new PlaceholderFormatter([
+    'date' => '2024-01-15',
+    'amount' => '1234.56',
+    'phone' => '1234567890',
+]);
+
+echo $formatter->format('Date: {{date|date:Y/m/d}}, Amount: ${{amount|number:2}}, Phone: {{phone|pattern:(###) ###-####}}');
+// Output: Date: 2024/01/15, Amount: $1,234.56, Phone: (123) 456-7890
+```
+
+See the [PlaceholderFormatter documentation](docs/PlaceholderFormatter.md) and [FormatterModifier documentation](docs/modifiers/FormatterModifier.md) for more details.
+
 ## Formatters
 
 | Formatter                                                  | Description                                                      |

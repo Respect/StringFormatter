@@ -35,14 +35,42 @@ echo $formatter->formatUsing(
 
 ### With Modifiers
 
-Placeholders can include modifiers that transform values. See the [Modifiers](modifiers/Modifiers.md) documentation for details.
+Placeholders can include modifiers that transform values. Formatters can be used as modifiers using the pipe syntax.
 
 ```php
-$formatter = new PlaceholderFormatter(['name' => 'John']);
+$formatter = new PlaceholderFormatter([
+    'date' => '2024-01-15',
+    'amount' => '1234.567',
+    'phone' => '1234567890',
+]);
 
-echo $formatter->format('Hello {{name|upper}}!');
-// Outputs: Hello JOHN!
+// Date formatting
+echo $formatter->format('Date: {{date|date:Y/m/d}}');
+// Output: Date: 2024/01/15
+
+// Number formatting
+echo $formatter->format('Amount: ${{amount|number:2}}');
+// Output: Amount: $1,234.57
+
+// Pattern formatting
+echo $formatter->format('Phone: {{phone|pattern:(###) ###-####}}');
+// Output: Phone: (123) 456-7890
 ```
+
+See the [FormatterModifier](modifiers/FormatterModifier.md) documentation for all available formatters and options.
+
+You can also use other modifiers like `list` and `trans`:
+
+```php
+$formatter = new PlaceholderFormatter([
+    'items' => ['apple', 'banana', 'cherry'],
+]);
+
+echo $formatter->format('Items: {{items|list:and}}');
+// Output: Items: apple, banana, and cherry
+```
+
+See the [Modifiers](modifiers/Modifiers.md) documentation for details.
 
 ## API
 

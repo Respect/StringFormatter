@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Respect\StringFormatter;
 
+use Respect\StringFormatter\Modifiers\FormatterModifier;
 use Respect\StringFormatter\Modifiers\ListModifier;
 use Respect\StringFormatter\Modifiers\StringifyModifier;
 use Respect\StringFormatter\Modifiers\StringPassthroughModifier;
@@ -23,8 +24,10 @@ final readonly class PlaceholderFormatter implements Formatter
     /** @param array<string, mixed> $parameters */
     public function __construct(
         private array $parameters,
-        private Modifier $modifier = new TransModifier(
-            new ListModifier(new StringPassthroughModifier(new StringifyModifier())),
+        private Modifier $modifier = new FormatterModifier(
+            new TransModifier(
+                new ListModifier(new StringPassthroughModifier(new StringifyModifier())),
+            ),
         ),
     ) {
     }
@@ -44,7 +47,7 @@ final readonly class PlaceholderFormatter implements Formatter
     private function formatUsingParameters(string $input, array $parameters): string
     {
         return (string) preg_replace_callback(
-            '/{{(\w+)(\|([^}]+))?}}/',
+            '/{{(\w+)(\|([^}\\\\]*(?:\\\\.[^}\\\\]*)*))?}}/',
             fn(array $matches) => $this->processPlaceholder($matches, $parameters),
             $input,
         );

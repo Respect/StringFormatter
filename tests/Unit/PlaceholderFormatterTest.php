@@ -609,4 +609,66 @@ final class PlaceholderFormatterTest extends TestCase
             ],
         ];
     }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForEscapedColons')]
+    public function itShouldHandleEscapedColonsInFormatterArguments(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForEscapedColons(): array
+    {
+        return [
+            'pattern with escaped colon' => [
+                ['time' => '1234'],
+                '{{time|pattern:##\:##}}',
+                '12:34',
+            ],
+            'pattern with multiple escaped colons' => [
+                ['time' => '123456'],
+                '{{time|pattern:##\:##\:##}}',
+                '12:34:56',
+            ],
+        ];
+    }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForEscapedPipes')]
+    public function itShouldHandleEscapedPipesInFormatterArguments(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForEscapedPipes(): array
+    {
+        return [
+            'pattern with escaped pipe' => [
+                ['value' => '123456'],
+                '{{value|pattern:###\|###}}',
+                '123|456',
+            ],
+            'pattern with multiple escaped pipes' => [
+                ['value' => '12345678'],
+                '{{value|pattern:##\|##\|##\|##}}',
+                '12|34|56|78',
+            ],
+        ];
+    }
 }
