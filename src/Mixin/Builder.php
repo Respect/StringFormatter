@@ -18,17 +18,21 @@ interface Builder
 {
     public function area(string $unit): FormatterBuilder;
 
+    public function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
+
     public function imperialArea(string $unit): FormatterBuilder;
 
     public function imperialLength(string $unit): FormatterBuilder;
 
     public function imperialMass(string $unit): FormatterBuilder;
 
-    public function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
+    public function lowercase(): FormatterBuilder;
 
     public function mask(string $range, string $replacement = '*'): FormatterBuilder;
 
     public function metric(string $unit): FormatterBuilder;
+
+    public function metricMass(string $unit): FormatterBuilder;
 
     public function number(
         int $decimals = 0,
@@ -36,12 +40,12 @@ interface Builder
         string $thousandsSeparator = ',',
     ): FormatterBuilder;
 
-    public function metricMass(string $unit): FormatterBuilder;
-
     public function pattern(string $pattern): FormatterBuilder;
 
     /** @param array<string, mixed> $parameters */
     public function placeholder(array $parameters): FormatterBuilder;
 
     public function time(string $unit): FormatterBuilder;
+
+    public function uppercase(): FormatterBuilder;
 }
