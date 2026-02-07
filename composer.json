@@ -49,7 +49,6 @@
             "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
-        "sort-packages": true,
-        "platform-check": false
+        "sort-packages": true
     }
 }
