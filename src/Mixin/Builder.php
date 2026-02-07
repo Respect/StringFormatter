@@ -16,32 +16,32 @@ use Respect\StringFormatter\FormatterBuilder;
 /** @mixin FormatterBuilder */
 interface Builder
 {
-    public function area(string $unit): FormatterBuilder;
+    public static function area(string $unit): FormatterBuilder;
 
-    public function imperialArea(string $unit): FormatterBuilder;
+    public static function imperialArea(string $unit): FormatterBuilder;
 
-    public function imperialLength(string $unit): FormatterBuilder;
+    public static function imperialLength(string $unit): FormatterBuilder;
 
-    public function imperialMass(string $unit): FormatterBuilder;
+    public static function imperialMass(string $unit): FormatterBuilder;
 
-    public function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
+    public static function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
 
-    public function mask(string $range, string $replacement = '*'): FormatterBuilder;
+    public static function mask(string $range, string $replacement = '*'): FormatterBuilder;
 
-    public function metric(string $unit): FormatterBuilder;
+    public static function metric(string $unit): FormatterBuilder;
 
-    public function number(
+    public static function number(
         int $decimals = 0,
         string $decimalSeparator = '.',
         string $thousandsSeparator = ',',
     ): FormatterBuilder;
 
-    public function metricMass(string $unit): FormatterBuilder;
+    public static function metricMass(string $unit): FormatterBuilder;
 
-    public function pattern(string $pattern): FormatterBuilder;
+    public static function pattern(string $pattern): FormatterBuilder;
 
     /** @param array<string, mixed> $parameters */
-    public function placeholder(array $parameters): FormatterBuilder;
+    public static function placeholder(array $parameters): FormatterBuilder;
 
-    public function time(string $unit): FormatterBuilder;
+    public static function time(string $unit): FormatterBuilder;
 }
