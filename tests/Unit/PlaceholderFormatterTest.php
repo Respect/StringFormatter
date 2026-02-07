@@ -671,4 +671,81 @@ final class PlaceholderFormatterTest extends TestCase
             ],
         ];
     }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForMultiplePipes')]
+    public function itShouldHandleMultiplePipesInSequence(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForMultiplePipes(): array
+    {
+        return [
+            'trans then quote' => [
+                ['name' => 'hello'],
+                '{{name|trans|quote}}',
+                '`hello`',
+            ],
+            'quote then trans (demonstrates order matters)' => [
+                ['name' => 'hello'],
+                '{{name|quote|trans}}',
+                '`hello`',
+            ],
+            'pattern then mask' => [
+                ['phone' => '1234567890'],
+                '{{phone|pattern:(###) ###-####|mask:6-12}}',
+                '(123) ******90',
+            ],
+            'number then mask' => [
+                ['value' => '12345'],
+                '{{value|number:2|mask:1-5}}',
+                '*****45',
+            ],
+            'three pipes: pattern, number, mask' => [
+                ['value' => '12345'],
+                '{{value|pattern:###.##|number:2|mask:1-4}}',
+                '****45',
+            ],
+        ];
+    }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForMultiplePipesWithEscaping')]
+    public function itShouldHandleMultiplePipesWithEscapedCharacters(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForMultiplePipesWithEscaping(): array
+    {
+        return [
+            'pattern with escaped pipe then mask' => [
+                ['value' => '123456'],
+                '{{value|pattern:###\|###|mask:1-3}}',
+                '***|456',
+            ],
+            'pattern with escaped colon then pattern with escaped pipe' => [
+                ['value' => '12345678'],
+                '{{value|pattern:####\:####|pattern:####\|####}}',
+                '1234|5678',
+            ],
+        ];
+    }
 }
