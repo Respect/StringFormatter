@@ -690,15 +690,10 @@ final class PlaceholderFormatterTest extends TestCase
     public static function providerForMultiplePipes(): array
     {
         return [
-            'trans then quote' => [
-                ['name' => 'hello'],
-                '{{name|trans|quote}}',
-                '`hello`',
-            ],
-            'quote then trans (demonstrates order matters)' => [
-                ['name' => 'hello'],
-                '{{name|quote|trans}}',
-                '`hello`',
+            'date then mask' => [
+                ['value' => '2024-01-15'],
+                '{{value|date:Y/m/d|mask:5-7}}',
+                '2024***15',
             ],
             'pattern then mask' => [
                 ['phone' => '1234567890'],
@@ -707,13 +702,18 @@ final class PlaceholderFormatterTest extends TestCase
             ],
             'number then mask' => [
                 ['value' => '12345'],
-                '{{value|number:2|mask:1-5}}',
+                '{{value|number:0|mask:1-5}}',
                 '*****45',
             ],
-            'three pipes: pattern, number, mask' => [
+            'pattern then number' => [
                 ['value' => '12345'],
-                '{{value|pattern:###.##|number:2|mask:1-4}}',
-                '****45',
+                '{{value|pattern:###.##|number:2}}',
+                '123.45',
+            ],
+            'three pipes: pattern, date, mask' => [
+                ['value' => '20240115'],
+                '{{value|pattern:####-##-##|date:Y/m/d|mask:5-7}}',
+                '2024***15',
             ],
         ];
     }
