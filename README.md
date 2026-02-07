@@ -70,6 +70,7 @@ See the [PlaceholderFormatter documentation](docs/PlaceholderFormatter.md) and [
 | [PatternFormatter](docs/PatternFormatter.md)               | Pattern-based string filtering with placeholders                 |
 | [PlaceholderFormatter](docs/PlaceholderFormatter.md)       | Template interpolation with placeholder replacement              |
 | [TimeFormatter](docs/TimeFormatter.md)                     | Time promotion (mil, c, dec, y, mo, w, d, h, min, s, ms, us, ns) |
+| [TrimFormatter](docs/TrimFormatter.md)                     | Remove whitespace from string edges                              |
 
 ## Contributing
 
