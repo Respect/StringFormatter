@@ -15,6 +15,27 @@ Modifiers form a chain where each modifier can:
 1. **Handle the value** and return a transformed string
 2. **Pass the value** to the next modifier in the chain
 
+### Chaining Multiple Modifiers
+
+You can chain multiple modifiers together by separating them with the pipe (`|`) character. Modifiers are applied sequentially from left to right, with each modifier receiving the output of the previous one.
+
+```php
+$formatter = new PlaceholderFormatter([
+    'phone' => '1234567890',
+    'value' => '123456',
+]);
+
+// Apply pattern formatting, then mask sensitive data
+echo $formatter->format('Phone: {{phone|pattern:(###) ###-####|mask:6-12}}');
+// Output: Phone: (123) ******90
+
+// Escaped pipe in pattern argument, then apply mask
+echo $formatter->format('{{value|pattern:###\|###|mask:1-3}}');
+// Output: ***|456
+```
+
+**Important:** When using the pipe character (`|`) as part of a modifier argument (not as a separator), escape it with a backslash (`\|`).
+
 ## Basic Usage
 
 ```php
