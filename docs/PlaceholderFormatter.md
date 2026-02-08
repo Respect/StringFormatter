@@ -59,6 +59,35 @@ echo $formatter->format('Phone: {{phone|pattern:(###) ###-####}}');
 
 See the [FormatterModifier](modifiers/FormatterModifier.md) documentation for all available formatters and options.
 
+#### Multiple Pipes
+
+You can chain multiple modifiers together using the pipe (`|`) character. Modifiers are applied sequentially from left to right.
+
+```php
+$formatter = new PlaceholderFormatter([
+    'phone' => '1234567890',
+    'value' => '12345',
+]);
+
+// Apply pattern formatting, then mask sensitive data
+echo $formatter->format('Phone: {{phone|pattern:(###) ###-####|mask:6-12}}');
+// Output: Phone: (123) ******90
+
+// Apply number formatting, then mask
+echo $formatter->format('Value: {{value|number:0|mask:1-3}}');
+// Output: Value: ***45
+```
+
+**Escaped Pipes:** If you need to use the pipe character (`|`) as part of a modifier argument (not as a separator), escape it with a backslash (`\|`):
+
+```php
+$formatter = new PlaceholderFormatter(['value' => '123456']);
+
+// Escaped pipe in pattern, then apply mask
+echo $formatter->format('{{value|pattern:###\|###|mask:1-3}}');
+// Output: ***|456
+```
+
 You can also use other modifiers like `list` and `trans`:
 
 ```php
@@ -91,15 +120,17 @@ Formats with additional parameters merged with constructor parameters. Construct
 
 ## Template Syntax
 
-Placeholders follow the format `{{name}}` where `name` is a valid parameter key. Modifiers can be added after a pipe: `{{name|modifier}}`.
+Placeholders follow the format `{{name}}` where `name` is a valid parameter key. Modifiers can be added after a pipe: `{{name|modifier}}`. Multiple modifiers can be chained: `{{name|modifier1|modifier2}}`.
 
 **Rules:**
 
 - Names must match `\w+` (letters, digits, underscore)
 - Names are case-sensitive
 - No whitespace inside braces or around the pipe
+- Multiple pipes are separated by `|` and applied sequentially
+- Escaped pipes (`\|`) within modifiers are treated as literal characters, not separators
 
-**Valid:** `{{name}}`, `{{user_id}}`, `{{name|raw}}`
+**Valid:** `{{name}}`, `{{user_id}}`, `{{name|raw}}`, `{{value|date:Y-m-d|mask:1-5}}`
 
 **Invalid:** `{name}`, `{{ name }}`, `{{first-name}}`, `{{}}`
 

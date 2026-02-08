@@ -18,6 +18,7 @@ use Respect\StringFormatter\Modifiers\TransModifier;
 
 use function array_key_exists;
 use function preg_replace_callback;
+use function preg_split;
 
 final readonly class PlaceholderFormatter implements Formatter
 {
@@ -67,6 +68,17 @@ final readonly class PlaceholderFormatter implements Formatter
             return $placeholder;
         }
 
-        return $this->modifier->modify($parameters[$name], $pipe);
+        $value = $parameters[$name];
+        if ($pipe === null) {
+            return $this->modifier->modify($value, null);
+        }
+
+        $pipes = preg_split('/(?<!\\\\)\|/', $pipe) ?: [];
+        foreach ($pipes as $pipe) {
+            $value = $this->modifier->modify($value, $pipe);
+        }
+
+        /** @phpstan-ignore return.type */
+        return $value;
     }
 }

@@ -671,4 +671,122 @@ final class PlaceholderFormatterTest extends TestCase
             ],
         ];
     }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForMultiplePipes')]
+    public function itShouldHandleMultiplePipesInSequence(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForMultiplePipes(): array
+    {
+        return [
+            'date then mask' => [
+                ['value' => '2024-01-15'],
+                '{{value|date:Y/m/d|mask:5-8}}',
+                '2024****15',
+            ],
+            'pattern then mask' => [
+                ['phone' => '1234567890'],
+                '{{phone|pattern:(###) ###-####|mask:7-12}}',
+                '(123) ******90',
+            ],
+            'number then mask' => [
+                ['value' => '12345'],
+                '{{value|number:0|mask:1-2}}',
+                '**,345',
+            ],
+            'pattern then number' => [
+                ['value' => '12345'],
+                '{{value|pattern:###.##|number:2}}',
+                '123.45',
+            ],
+            'three pipes: pattern, date, mask' => [
+                ['value' => '20240115'],
+                '{{value|pattern:####-##-##|date:Y/m/d|mask:5-7}}',
+                '2024***/15',
+            ],
+        ];
+    }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForMultiplePipesWithEscaping')]
+    public function itShouldHandleMultiplePipesWithEscapedCharacters(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForMultiplePipesWithEscaping(): array
+    {
+        return [
+            'pattern with escaped pipe then mask' => [
+                ['value' => '123456'],
+                '{{value|pattern:###\|###|mask:1-3}}',
+                '***|456',
+            ],
+            'pattern with escaped colon then pattern with escaped pipe' => [
+                ['value' => '12345678'],
+                '{{value|pattern:####\:####|pattern:0000\|0000}}',
+                '1234|5678',
+            ],
+        ];
+    }
+
+    /** @param array<string, mixed> $parameters */
+    #[Test]
+    #[DataProvider('providerForEmptyPipe')]
+    public function itShouldHandleEmptyPipe(
+        array $parameters,
+        string $template,
+        string $expected,
+    ): void {
+        $formatter = new PlaceholderFormatter($parameters);
+        $actual = $formatter->format($template);
+
+        self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: array<string, mixed>, 1: string, 2: string}> */
+    public static function providerForEmptyPipe(): array
+    {
+        return [
+            'empty pipe at end' => [
+                ['name' => 'John'],
+                'Hello {{name|}}!',
+                'Hello John!',
+            ],
+            'empty pipes' => [
+                ['name' => 'John'],
+                'Hello {{name||}}!',
+                'Hello John!',
+            ],
+            'empty pipe in middle' => [
+                ['first' => 'A', 'second' => 'B'],
+                '{{first|}}-{{second}}',
+                'A-B',
+            ],
+            'empty pipe with missing parameter' => [
+                [],
+                'Hello {{name|}}!',
+                'Hello {{name|}}!',
+            ],
+        ];
+    }
 }
