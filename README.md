@@ -26,8 +26,6 @@ composer require respect/string-formatter
 You can use individual formatters directly or chain multiple formatters together using the `FormatterBuilder`:
 
 ```php
-use Respect\StringFormatter\FormatterBuilder as f;
-
 echo f::create()
     ->mask('7-12')
     ->pattern('#### #### #### ####')

@@ -24,7 +24,8 @@
     "autoload": {
         "psr-4": {
             "Respect\\StringFormatter\\": "src/"
-        }
+        },
+        "files": ["aliases.php"]
     },
     "autoload-dev": {
         "psr-4": {
