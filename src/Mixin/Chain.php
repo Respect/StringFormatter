@@ -12,44 +12,43 @@ declare(strict_types=1);
 namespace Respect\StringFormatter\Mixin;
 
 use Respect\StringFormatter\Formatter;
-use Respect\StringFormatter\FormatterBuilder;
 
 interface Chain extends Formatter
 {
-    public function area(string $unit): FormatterBuilder;
+    public function area(string $unit): Chain;
 
-    public function creditCard(): FormatterBuilder;
+    public function creditCard(): Chain;
 
-    public function secureCreditCard(string $maskChar = '*'): FormatterBuilder;
+    public function secureCreditCard(string $maskChar = '*'): Chain;
 
-    public function imperialArea(string $unit): FormatterBuilder;
+    public function imperialArea(string $unit): Chain;
 
-    public function imperialLength(string $unit): FormatterBuilder;
+    public function imperialLength(string $unit): Chain;
 
-    public function imperialMass(string $unit): FormatterBuilder;
+    public function imperialMass(string $unit): Chain;
 
-    public function date(string $format = 'Y-m-d H:i:s'): FormatterBuilder;
+    public function date(string $format = 'Y-m-d H:i:s'): Chain;
 
-    public function lowercase(): FormatterBuilder;
+    public function lowercase(): Chain;
 
-    public function mask(string $range, string $replacement = '*'): FormatterBuilder;
+    public function mask(string $range, string $replacement = '*'): Chain;
 
-    public function metric(string $unit): FormatterBuilder;
+    public function metric(string $unit): Chain;
 
     public function number(
         int $decimals = 0,
         string $decimalSeparator = '.',
         string $thousandsSeparator = ',',
-    ): FormatterBuilder;
+    ): Chain;
 
-    public function metricMass(string $unit): FormatterBuilder;
+    public function metricMass(string $unit): Chain;
 
-    public function pattern(string $pattern): FormatterBuilder;
+    public function pattern(string $pattern): Chain;
 
     /** @param array<string, mixed> $parameters */
-    public function placeholder(array $parameters): FormatterBuilder;
+    public function placeholder(array $parameters): Chain;
 
-    public function time(string $unit): FormatterBuilder;
+    public function time(string $unit): Chain;
 
-    public function uppercase(): FormatterBuilder;
+    public function uppercase(): Chain;
 }
