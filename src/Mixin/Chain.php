@@ -19,7 +19,7 @@ interface Chain extends Formatter
 
     public function creditCard(): Chain;
 
-    public function secureCreditCard(string $maskChar = '*'): Chain;
+    public function date(string $format = 'Y-m-d H:i:s'): Chain;
 
     public function imperialArea(string $unit): Chain;
 
@@ -27,11 +27,11 @@ interface Chain extends Formatter
 
     public function imperialMass(string $unit): Chain;
 
-    public function date(string $format = 'Y-m-d H:i:s'): Chain;
-
     public function lowercase(): Chain;
 
     public function mask(string $range, string $replacement = '*'): Chain;
+
+    public function mass(string $unit): Chain;
 
     public function metric(string $unit): Chain;
 
@@ -41,12 +41,12 @@ interface Chain extends Formatter
         string $thousandsSeparator = ',',
     ): Chain;
 
-    public function metricMass(string $unit): Chain;
-
     public function pattern(string $pattern): Chain;
 
     /** @param array<string, mixed> $parameters */
     public function placeholder(array $parameters): Chain;
+
+    public function secureCreditCard(string $maskChar = '*'): Chain;
 
     public function time(string $unit): Chain;
 

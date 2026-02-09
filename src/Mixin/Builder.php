@@ -20,7 +20,7 @@ interface Builder
 
     public static function creditCard(): Chain;
 
-    public static function secureCreditCard(string $maskChar = '*'): Chain;
+    public static function date(string $format = 'Y-m-d H:i:s'): Chain;
 
     public static function imperialArea(string $unit): Chain;
 
@@ -28,11 +28,11 @@ interface Builder
 
     public static function imperialMass(string $unit): Chain;
 
-    public static function date(string $format = 'Y-m-d H:i:s'): Chain;
-
     public static function lowercase(): Chain;
 
     public static function mask(string $range, string $replacement = '*'): Chain;
+
+    public static function mass(string $unit): Chain;
 
     public static function metric(string $unit): Chain;
 
@@ -42,12 +42,12 @@ interface Builder
         string $thousandsSeparator = ',',
     ): Chain;
 
-    public static function metricMass(string $unit): Chain;
-
     public static function pattern(string $pattern): Chain;
 
     /** @param array<string, mixed> $parameters */
     public static function placeholder(array $parameters): Chain;
+
+    public static function secureCreditCard(string $maskChar = '*'): Chain;
 
     public static function time(string $unit): Chain;
 
