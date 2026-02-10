@@ -28,6 +28,36 @@ use Respect\StringFormatter\Test\Helper\TestingModifier;
 final class FormatterModifierTest extends TestCase
 {
     #[Test]
+    #[DataProvider('providerForNonScalarValues')]
+    public function itShouldDelegateWithNullPipeForNonScalarValues(
+        mixed $value,
+        string $pipe,
+    ): void {
+        $nextModifier = new TestingModifier('fallback');
+        $modifier = new FormatterModifier($nextModifier);
+
+        $result = $modifier->modify($value, $pipe);
+
+        self::assertSame('fallback', $result);
+        self::assertNull($nextModifier->lastPipe);
+    }
+
+    #[Test]
+    #[DataProvider('providerForInvalidFormatters')]
+    public function itShouldDelegateWithOriginalPipeForInvalidFormatters(
+        mixed $value,
+        string $pipe,
+    ): void {
+        $nextModifier = new TestingModifier('fallback');
+        $modifier = new FormatterModifier($nextModifier);
+
+        $result = $modifier->modify($value, $pipe);
+
+        self::assertSame('fallback', $result);
+        self::assertSame($pipe, $nextModifier->lastPipe);
+    }
+
+    #[Test]
     public function itShouldDelegateWhenPipeIsNull(): void
     {
         $nextModifier = new TestingModifier('modified');
@@ -260,5 +290,24 @@ final class FormatterModifierTest extends TestCase
         $actual = $modifier->modify($value, 'pattern:##########');
 
         self::assertSame($expected, $actual);
+    }
+
+    /** @return array<string, array{0: mixed, 1: string}> */
+    public static function providerForNonScalarValues(): array
+    {
+        return [
+            'array value delegates with null pipe' => [['array'], 'date:Y/m/d'],
+            'object value delegates with null pipe' => [(object) ['key' => 'value'], 'number:2'],
+            'null value delegates with null pipe' => [null, 'mask:1-3'],
+        ];
+    }
+
+    /** @return array<string, array{0: mixed, 1: string}> */
+    public static function providerForInvalidFormatters(): array
+    {
+        return [
+            'unknown formatter delegates with original pipe' => ['test value', 'unknown:formatter'],
+            'invalid number formatter delegates with original pipe' => ['test', 'number:invalid-decimal'],
+        ];
     }
 }
