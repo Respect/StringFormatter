@@ -17,12 +17,16 @@ use function sprintf;
 
 final class TestingModifier implements Modifier
 {
+    public string|null $lastPipe = null;
+
     public function __construct(private string|null $customResult = null)
     {
     }
 
     public function modify(mixed $value, string|null $pipe): string
     {
+        $this->lastPipe = $pipe;
+
         return $this->customResult ?? ($pipe ? sprintf('%s(%s)', $pipe, print_r($value, true)) : print_r($value, true));
     }
 }

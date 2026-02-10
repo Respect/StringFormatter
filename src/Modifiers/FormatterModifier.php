@@ -40,8 +40,12 @@ final readonly class FormatterModifier implements Modifier
 
         $formatter = $this->tryToCreateFormatter($name, $arguments);
 
-        if ($formatter === null || !is_scalar($value)) {
+        if ($formatter === null) {
             return $this->nextModifier->modify($value, $pipe);
+        }
+
+        if (!is_scalar($value)) {
+            return $this->nextModifier->modify($value, null);
         }
 
         return $formatter->format((string) $value);
