@@ -25,9 +25,9 @@ final readonly class PlaceholderFormatter implements Formatter
     /** @param array<string, mixed> $parameters */
     public function __construct(
         private array $parameters,
-        private Modifier $modifier = new FormatterModifier(
-            new TransModifier(
-                new ListModifier(new StringPassthroughModifier(new StringifyModifier())),
+        private Modifier $modifier = new TransModifier(
+            new ListModifier(
+                new FormatterModifier(new StringPassthroughModifier(new StringifyModifier())),
             ),
         ),
     ) {
